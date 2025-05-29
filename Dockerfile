@@ -1,4 +1,4 @@
-FROM quay.io/ibm/maven:3.6.3 AS builder
+FROM quay.io/centos7/maven-36-centos7:latest AS builder
 WORKDIR /app
 COPY . .
 RUN mvn clean install package
