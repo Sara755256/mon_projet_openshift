@@ -1,4 +1,5 @@
-stages:          
+
+stages:
   - build
   - deploy
 
@@ -6,20 +7,26 @@ build:
   stage: build
   script:
     - mvn clean install package
-  tags: 
-      - linux
-
+  tags:
+   - linux 
   artifacts:
     paths:
       - target/myapp-CICD.war
-     
-   
+    expire_in: 1 hour
+    when: always
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+      - target/
+
 deploy:
   stage: deploy
-  dependencies:
-    - build
+  needs: ["build"]
+  before_script:
+    - sleep 5  # Délai de sécurité
   script:
-    - sudo cp target/myapp-CICD.war /opt/tomcat/webapps/
+    - until [ -f "target/myapp-CICD.war" ]; do sleep 1; done  # Attente active
+    - sudo cp target/myapp-g15.war /opt/tomcat/webapps/
     - sudo systemctl restart tomcat
-  tags: 
-    - linux
+  tags:
+   - linux 
