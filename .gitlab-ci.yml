@@ -5,7 +5,7 @@ stages:
 build:
   stage: build
   script:
-    - mvn package
+    - mvn clean install package
   tags: 
       - linux
 
