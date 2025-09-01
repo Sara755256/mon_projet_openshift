@@ -9,6 +9,25 @@ pipeline {
 
             }
         }
+
+      stage("SonarQube analysis") {
+            
+            steps {
+              withSonarQubeEnv('sonar-server') {
+                  withMaven(globalMavenSettingsConfig: '', jdk: 'java', maven: 'maven', mavenSettingsConfig: '', traceability: true) {
+                               sh 'mvn clean package sonar:sonar'
+                 }
+              }
+            }
+          }
+          stage("Quality Gate") {
+            steps {
+              timeout(time: 1, unit: 'HOURS') {
+                waitForQualityGate abortPipeline: true
+              }
+            }
+          }
+        
         
        stage('Build'){
            steps{
@@ -21,69 +40,7 @@ pipeline {
            }
        }
 
-
-     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-     
-
-      stage('Nexus'){
-         steps{
-
-              nexusArtifactUploader artifacts: [[artifactId: 'new-year-app-houcem', classifier: '', file: 'target/myapp-g17.war', type: 'war']], credentialsId: 'id_nexus', groupId: 'com.example', nexusUrl: '172.16.2.45:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-snapshots', version: '1.0.0-SNAPSHOT'
-         }
-
-      }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-       stage('deploy'){
-           steps{
-               deploy adapters: [tomcat9(alternativeDeploymentContext: '', credentialsId: 'id_tomcat', path: '', url: 'http://172.16.17.100:8080')], contextPath: null, war: '**/*.war'
-               
-           }
-           
-       }
+ 
        
     }
   
