@@ -25,8 +25,11 @@ pipeline {
        stage('Set Version') {
     steps {
         script {
-            def version = "1.0.${env.BUILD_NUMBER}"
+                withMaven(globalMavenSettingsConfig: '', jdk: 'java', maven: 'maven', mavenSettingsConfig: '', traceability: true) {
+                      def version = "1.0.${env.BUILD_NUMBER}"
             sh "mvn versions:set -DnewVersion=${version}"
+                          }
+           
         }
     }
 }
