@@ -1,4 +1,0 @@
-
-FROM tomcat:9.0.110-jre17
-
-COPY myapp-g18-houcem.war /usr/local/tomcat/webapps
