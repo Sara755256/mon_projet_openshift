@@ -145,6 +145,7 @@
     <h1>Happy New Year 2025!</h1>
         <h1>khlifi houcem!</h1>
      <h1>CI/CD with Jenkins</h1>
+     <h1>Gitlab Webhook</h1>
     <div class="balloon"></div>
     <div class="balloon"></div>
     <div class="balloon"></div>
