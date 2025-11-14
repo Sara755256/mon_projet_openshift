@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: maven
-        image: houcemdevops/maven-app:8
+        image: houcemdevops/maven-app:10
 ---
 apiVersion: v1
 kind: Service
