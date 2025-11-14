@@ -20,7 +20,7 @@ pipeline {
             steps{
                script  {
 
-                   docker.build("${env.MAVEN_IMAGE}", .)
+                   docker.build("${env.MAVEN_IMAGE}", '.')
                }
             }
         }  
