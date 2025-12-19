@@ -53,7 +53,7 @@ pipeline {
            }
         }
 
-         stage('Trivy Image Scan'){
+        stage('Trivy Image Scan'){
           steps{
 
                sh 'trivy image ${env.MAVEN_IMAGE} > rapportimage.txt'
